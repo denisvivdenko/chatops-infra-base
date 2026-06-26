@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend-api
+
+  template:
+    metadata:
+      labels:
+        app: backend-api
+
+    spec:
+      initContainers:
+        - name: wait-for-redis
+          image: redis:7
+          command: ["sh", "-c", "until redis-cli -h redis ping; do sleep 2; done"]
+
+      containers:
+        - name: backend-api
+          image: denysvivdenko/chatops-backend:88ddf319dacb1ae4f17f46a46a070dc025d58c6e
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+          command: ["python", "-m", "chatops.api.main"]
+          ports:
+            - containerPort: 8000

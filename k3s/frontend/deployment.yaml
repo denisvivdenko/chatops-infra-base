@@ -19,6 +19,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: denysvivdenko/chatops-frontend:7f26098e696e6a7826db2cec01b545802a50e191
+          image: denysvivdenko/chatops-frontend:6a05697fe81e93d0a552ce299fa124fce393c92e
+          env:
+            - name: BACKEND_URL
+              value: "http://192.168.1.56/api"
           ports:
             - containerPort: 3000
