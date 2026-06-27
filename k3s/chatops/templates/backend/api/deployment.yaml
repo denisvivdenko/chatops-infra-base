@@ -24,7 +24,8 @@ spec:
 
       containers:
         - name: backend-api
-          image: denysvivdenko/chatops-backend:88ddf319dacb1ae4f17f46a46a070dc025d58c6e
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
           env:
             - name: REDIS_HOST
               value: "redis"

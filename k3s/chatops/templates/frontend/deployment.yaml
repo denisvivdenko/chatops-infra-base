@@ -19,9 +19,10 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: denysvivdenko/chatops-frontend:6a05697fe81e93d0a552ce299fa124fce393c92e
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           env:
             - name: BACKEND_URL
-              value: "http://192.168.1.56/api"
+              value: "{{ .Values.frontend.backendUrl }}"
           ports:
             - containerPort: 3000

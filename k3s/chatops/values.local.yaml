@@ -1,0 +1,12 @@
+frontend:
+  image:
+    repository: chatops-frontend
+    tag: latest
+    pullPolicy: Never
+  backendUrl: "http://localhost/api"
+
+backend:
+  image:
+    repository: chatops-backend
+    tag: latest
+    pullPolicy: Never
