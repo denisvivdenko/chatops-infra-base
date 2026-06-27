@@ -3,15 +3,16 @@ kind: Ingress
 
 metadata:
   name: chatops
+  namespace: default
 
 spec:
+  ingressClassName: ngrok
   rules:
-    - http:
+    - host: "{{ .Values.ngrok.domain }}"
+      http:
         paths:
-
         - path: /api
           pathType: Prefix
-
           backend:
             service:
               name: backend-api
@@ -20,7 +21,6 @@ spec:
 
         - path: /
           pathType: Prefix
-
           backend:
             service:
               name: frontend
