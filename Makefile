@@ -30,7 +30,7 @@ import-images:
 		k3s ctr images import backend.tar && \
 		rm backend.tar
 
-setup-ngrok:
+setup-reverse-proxy:
 	helm repo add ngrok https://charts.ngrok.com 
 	helm repo update
 	helm upgrade --install ngrok-operator ngrok/ngrok-operator \
@@ -38,6 +38,16 @@ setup-ngrok:
 		--create-namespace \
 		--set credentials.apiKey=$(NGROK_API_KEY) \
 		--set credentials.authtoken=$(NGROK_AUTHTOKEN)
+
+setup-monitoring:
+	helm repo add grafana https://grafana.github.io/helm-charts
+	helm repo update
+	helm upgrade --install loki grafana/loki \
+		--namespace dev \
+		-f k3s/chatops/values.loki.yaml
+	helm upgrade --install grafana grafana/grafana \
+		--namespace dev \
+		-f k3s/chatops/values.grafana.yaml
 
 ngrok-status:
 	kubectl get pods -n ngrok-operator
