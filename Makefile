@@ -48,6 +48,9 @@ setup-monitoring:
 	helm upgrade --install grafana grafana/grafana \
 		--namespace dev \
 		-f k3s/chatops/values.grafana.yaml
+	helm upgrade --install alloy grafana/alloy \
+		--namespace dev \
+		-f k3s/chatops/values.alloy.yaml
 
 ngrok-status:
 	kubectl get pods -n ngrok-operator
