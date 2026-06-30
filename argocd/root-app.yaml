@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: root
+  namespace: argocd
+
+spec:
+
+  source:
+    repoURL: https://github.com/denisvivdenko/chatops-infra-base.git
+    path: argocd/apps
+
+  destination:
+    server: in-cluster
+    namespace: argocd
