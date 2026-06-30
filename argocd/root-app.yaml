@@ -6,11 +6,12 @@ metadata:
   namespace: argocd
 
 spec:
+  project: chatops
 
   source:
     repoURL: https://github.com/denisvivdenko/chatops-infra-base.git
     path: argocd/apps
 
   destination:
-    server: in-cluster
+    server: https://kubernetes.default.svc
     namespace: argocd
