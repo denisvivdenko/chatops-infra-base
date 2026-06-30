@@ -13,3 +13,6 @@ backend:
 
 redis:
   storage: 1Gi
+
+ngrok:
+  domain: "nonaccusing-flynn-lurkingly.ngrok-free.dev" 
