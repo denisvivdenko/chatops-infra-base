@@ -21,6 +21,9 @@ spec:
         - name: wait-for-redis
           image: busybox:1.36
           command: ["sh", "-c", "i=0; until nc -z redis 6379; do i=$((i+1)); [ $i -ge 30 ] && echo 'Redis not ready after 60s' && exit 1; sleep 2; done"]
+        - name: wait-for-mongodb
+          image: busybox:1.36
+          command: ["sh", "-c", "i=0; until nc -z mongodb 27017; do i=$((i+1)); [ $i -ge 30 ] && echo 'MongoDB not ready after 60s' && exit 1; sleep 2; done"]
 
       containers:
         - name: backend-worker
@@ -29,4 +32,6 @@ spec:
           env:
             - name: REDIS_HOST
               value: "redis"
+            - name: MONGO_HOST
+              value: "mongodb"
           command: ["python", "-m", "chatops.workers.worker"]
