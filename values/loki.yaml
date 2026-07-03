@@ -43,6 +43,14 @@ write:
 gateway:
   enabled: false
 
+# Disable caching — not needed at this scale, and defaults are oversized
+# for a single small node (results-cache alone was requesting ~1.2Gi)
+resultsCache:
+  enabled: false
+
+chunksCache:
+  enabled: false
+
 test:
   enabled: false
 
