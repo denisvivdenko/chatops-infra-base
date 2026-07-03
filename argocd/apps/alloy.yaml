@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: alloy-logging-agent
+  name: alloy
   namespace: argocd
 
 spec:
@@ -11,15 +11,15 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       chart: alloy
-      targetRevision: "*"
+      targetRevision: "0.9.2"
       helm:
         valueFiles:
-          - $values/alloy.yaml
+          - $values/values/alloy.yaml
 
     - repoURL: https://github.com/denisvivdenko/chatops-infra-base.git
       targetRevision: HEAD
       ref: values
-      path: values
+      path: .
 
   destination:
     server: https://kubernetes.default.svc
