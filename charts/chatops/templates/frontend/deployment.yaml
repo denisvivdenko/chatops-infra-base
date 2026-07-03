@@ -3,8 +3,6 @@ kind: Deployment
 
 metadata:
   name: frontend
-  labels:
-    logging: enabled
 
 spec:
   replicas: 1
@@ -17,6 +15,7 @@ spec:
     metadata:
       labels:
         app: frontend
+        logging: enabled
 
     spec:
       containers:

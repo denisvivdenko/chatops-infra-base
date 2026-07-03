@@ -59,6 +59,11 @@ alloy:
       }
 
       loki.process "pod_logs" {
+        // Decode the CRI log wrapper (timestamp + stream + tag + message),
+        // reassembling partial ("P") lines so long writes aren't split
+        // into multiple garbled entries.
+        stage.cri {}
+
         forward_to = [loki.write.default.receiver]
       }
 
