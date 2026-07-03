@@ -16,3 +16,6 @@ setup-monitoring:
 
 port-forward-argocd:
 	kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+port-forward-grafana:
+	kubectl port-forward -n monitoring svc/grafana 3000:80
