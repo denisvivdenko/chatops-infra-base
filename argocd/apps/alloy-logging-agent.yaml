@@ -17,7 +17,7 @@ spec:
           - $values/alloy.yaml
 
     - repoURL: https://github.com/denisvivdenko/chatops-infra-base.git
-      targetRevision: main
+      targetRevision: HEAD
       ref: values
       path: values
 
