@@ -21,3 +21,11 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: ngrok-operator
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
