@@ -14,11 +14,12 @@ spec:
       targetRevision: "*"
       helm:
         valueFiles:
-          - $values/values/alloy.yaml
+          - $values/alloy.yaml
 
     - repoURL: https://github.com/denisvivdenko/chatops-infra-base.git
       targetRevision: main
       ref: values
+      path: values
 
   destination:
     server: https://kubernetes.default.svc
