@@ -24,6 +24,13 @@ singleBinary:
   persistence:
     enabled: true
     size: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
 # Disable components not needed in single-binary mode
 backend:
