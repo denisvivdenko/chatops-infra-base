@@ -19,3 +19,6 @@ port-forward-argocd:
 
 port-forward-grafana:
 	kubectl port-forward -n monitoring svc/grafana 3000:80
+
+get-grafana-admin-password:
+	kubectl get secret -n monitoring grafana -o jsonpath="{.data.admin-password}" | base64 -d
