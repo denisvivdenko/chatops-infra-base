@@ -3,6 +3,8 @@ kind: Deployment
 
 metadata:
   name: frontend
+  labels:
+    logging: enabled
 
 spec:
   replicas: 1
