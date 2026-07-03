@@ -8,7 +8,7 @@ frontend:
 backend:
   image:
     repository: denysvivdenko/chatops-backend
-    tag: "bd39ba15e9e3b980bbaba9009eb58b20db61cecc"
+    tag: "a9e1cb1fb7a3aa8855bd07248a00a60f1ba68da6"
     pullPolicy: Always
 
 redis:
