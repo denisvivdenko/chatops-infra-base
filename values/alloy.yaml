@@ -8,24 +8,57 @@ alloy:
       discovery.relabel "filtered" {
         targets = discovery.kubernetes.pods.targets
 
+        // Keep only dev namespace
         rule {
           source_labels = ["__meta_kubernetes_namespace"]
           regex         = "dev"
           action        = "keep"
         }
 
-        // Keep only pods explicitly opted in via label
-        // e.g. metadata.labels.logging: "enabled"
+        // Keep only pods opted in via label
         rule {
           source_labels = ["__meta_kubernetes_pod_label_logging"]
           regex         = "enabled"
           action        = "keep"
         }
+
+        // --- Set real labels so Loki/Grafana can identify streams ---
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          target_label  = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app"]
+          target_label  = "service_name"
+        }
+
+        // Build the path to the actual log file on disk
+        rule {
+          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+          separator     = "/"
+          target_label  = "__path__"
+          replacement   = "/var/log/pods/*$1/*.log"
+        }
       }
 
-      // 3. Tail logs only for the filtered targets
-      loki.source.kubernetes "pods" {
-        targets    = discovery.relabel.filtered.output
+      local.file_match "pod_logs" {
+        path_targets = discovery.relabel.filtered.output
+      }
+
+      loki.source.file "pod_logs" {
+        targets    = local.file_match.pod_logs.targets
+        forward_to = [loki.process.pod_logs.receiver]
+      }
+
+      loki.process "pod_logs" {
         forward_to = [loki.write.default.receiver]
       }
 
@@ -34,3 +67,10 @@ alloy:
           url = "http://loki.monitoring:3100/loki/api/v1/push"
         }
       }
+
+controller:
+  type: daemonset
+
+alloy:
+  mounts:
+    varlog: true 
