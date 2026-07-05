@@ -33,6 +33,10 @@ spec:
           env:
             - name: REDIS_HOST
               value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
             - name: MONGO_HOST
               value: "mongodb"
+            - name: MONGO_PORT
+              value: "27017"
           command: ["python", "-m", "chatops.workers.worker"]
