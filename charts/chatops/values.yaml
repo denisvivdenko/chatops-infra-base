@@ -1,7 +1,7 @@
 frontend:
   image:
     repository: denysvivdenko/chatops-frontend
-    tag: "24601dec1ab24c8f5017ab4191200bc72beee258"
+    tag: "589a1ed9a7e54d6ec7a9ea004bdd39d382b02a50"
     pullPolicy: Always
   backendUrl: "https://nonaccusing-flynn-lurkingly.ngrok-free.dev/api"
 
