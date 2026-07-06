@@ -12,9 +12,9 @@ ingress:
     service: http://backend-api.dev.svc.cluster.local:80
   - hostname: chatops.denysvivdenko.dev
     service: http://frontend.dev.svc.cluster.local:80
-  - hostname: monitoring.chatops.denysvivdenko.dev
+  - hostname: monitoring-chatops.denysvivdenko.dev
     service: http://grafana.monitoring.svc.cluster.local:80
-  - hostname: deploy.chatops.denysvivdenko.dev
+  - hostname: deploy-chatops.denysvivdenko.dev
     service: https://argocd-server.argocd.svc.cluster.local:443
     originRequest:
       noTLSVerify: true

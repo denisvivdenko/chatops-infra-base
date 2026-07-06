@@ -4,6 +4,13 @@ set -a
 source .env
 set +a
 
+if [ -z "$CLOUDFLARE_TUNNEL_CREDENTIALS_PATH" ]; then
+    echo "CLOUDFLARE_TUNNEL_CREDENTIALS_PATH is not set"
+    exit 1
+fi
+
+CLOUDFLARE_TUNNEL_CREDENTIALS=$(cat "$CLOUDFLARE_TUNNEL_CREDENTIALS_PATH")
+
 if [ -z "$CLOUDFLARE_TUNNEL_CREDENTIALS" ]; then
     echo "CLOUDFLARE_TUNNEL_CREDENTIALS is not set"
     exit 1
