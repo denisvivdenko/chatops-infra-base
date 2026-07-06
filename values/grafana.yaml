@@ -2,3 +2,17 @@ grafana.ini:
   server:
     domain: monitoring-chatops.denysvivdenko.dev
     root_url: "%(protocol)s://%(domain)s/"
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Loki
+        type: loki
+        access: proxy
+        url: http://loki.monitoring:3100
+        isDefault: true
