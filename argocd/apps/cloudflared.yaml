@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: cloudflared
+  namespace: argocd
+
+spec:
+  project: chatops
+
+  source:
+    repoURL: https://github.com/denisvivdenko/chatops-infra-base.git
+    path: charts/cloudflared
+    targetRevision: HEAD
+
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination:
+    name: in-cluster
+    namespace: cloudflared
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+
+data:
+  config.yaml: |
+    tunnel: {{ .Values.tunnelId }}
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    ingress:
+{{- range .Values.ingress }}
+      - hostname: {{ .hostname }}
+{{- if .path }}
+        path: {{ .path }}
+{{- end }}
+        service: {{ .service }}
+{{- if .originRequest }}
+        originRequest:
+{{ toYaml .originRequest | indent 10 }}
+{{- end }}
+{{- end }}
+      - service: http_status:404

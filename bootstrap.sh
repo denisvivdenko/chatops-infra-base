@@ -4,31 +4,25 @@ set -a
 source .env
 set +a
 
-if [ -z "$NGROK_AUTHTOKEN" ]; then
-    echo "NGROK_AUTHTOKEN is not set"
+if [ -z "$CLOUDFLARE_TUNNEL_CREDENTIALS" ]; then
+    echo "CLOUDFLARE_TUNNEL_CREDENTIALS is not set"
     exit 1
 fi
 
-if [ -z "$NGROK_API_KEY" ]; then
-    echo "NGROK_API_KEY is not set"
-    exit 1
-fi
+echo "CLOUDFLARE_TUNNEL_CREDENTIALS: ${CLOUDFLARE_TUNNEL_CREDENTIALS:0:4}..."
 
-echo "NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:0:4}..."
-echo "NGROK_API_KEY: ${NGROK_API_KEY:0:4}..."
+export ENCODED_CLOUDFLARE_TUNNEL_CREDENTIALS=$(echo -n "$CLOUDFLARE_TUNNEL_CREDENTIALS" | base64 -w0)
 
-export ENCODED_NGROK_AUTHTOKEN=$(echo -n "$NGROK_AUTHTOKEN" | base64)
-export ENCODED_NGROK_API_KEY=$(echo -n "$NGROK_API_KEY" | base64)
+kubectl create namespace cloudflared --dry-run=client -o yaml | kubectl apply -f -
 
 kubectl apply -f -<<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ngrok-operator-credentials
-  namespace: ngrok-operator
+  name: cloudflared-tunnel-credentials
+  namespace: cloudflared
 data:
-  API_KEY: "$ENCODED_NGROK_API_KEY"
-  AUTHTOKEN: "$ENCODED_NGROK_AUTHTOKEN"
+  credentials.json: "$ENCODED_CLOUDFLARE_TUNNEL_CREDENTIALS"
 EOF
 
 kubectl apply -f argocd/root-app.yaml

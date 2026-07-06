@@ -3,7 +3,7 @@ frontend:
     repository: denysvivdenko/chatops-frontend
     tag: "589a1ed9a7e54d6ec7a9ea004bdd39d382b02a50"
     pullPolicy: Always
-  backendUrl: "https://nonaccusing-flynn-lurkingly.ngrok-free.dev/api"
+  backendUrl: "https://chatops.denysvivdenko.dev/api"
 
 backend:
   image:
@@ -16,6 +16,3 @@ redis:
 
 mongodb:
   storage: 1Gi
-
-ngrok:
-  domain: "nonaccusing-flynn-lurkingly.ngrok-free.dev" 

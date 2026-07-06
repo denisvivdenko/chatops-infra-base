@@ -1,0 +1,4 @@
+grafana.ini:
+  server:
+    domain: monitoring.chatops.denysvivdenko.dev
+    root_url: "%(protocol)s://%(domain)s/"

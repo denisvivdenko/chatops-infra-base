@@ -1,0 +1,20 @@
+replicas: 2
+
+image:
+  repository: cloudflare/cloudflared
+  tag: "2026.6.1"
+
+tunnelId: "22b8a3fc-cbdb-4618-929c-967ec7aa8b8f"
+
+ingress:
+  - hostname: chatops.denysvivdenko.dev
+    path: ^/api
+    service: http://backend-api.dev.svc.cluster.local:80
+  - hostname: chatops.denysvivdenko.dev
+    service: http://frontend.dev.svc.cluster.local:80
+  - hostname: monitoring.chatops.denysvivdenko.dev
+    service: http://grafana.monitoring.svc.cluster.local:80
+  - hostname: deploy.chatops.denysvivdenko.dev
+    service: https://argocd-server.argocd.svc.cluster.local:443
+    originRequest:
+      noTLSVerify: true
