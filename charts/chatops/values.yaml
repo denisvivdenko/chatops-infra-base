@@ -1,7 +1,7 @@
 frontend:
   image:
     repository: denysvivdenko/chatops-frontend
-    tag: "17a532c569ab8410d3237e17dc947160b5e99072"
+    tag: "62498800d53fcfc7ca5d9a3ec024189b170c6070"
     pullPolicy: Always
   backendUrl: "https://chatops.denysvivdenko.dev/api"
 
