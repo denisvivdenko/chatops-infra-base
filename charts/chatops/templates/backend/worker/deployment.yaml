@@ -39,4 +39,9 @@ spec:
               value: "mongodb"
             - name: MONGO_PORT
               value: "27017"
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai-api-key
+                  key: OPENAI_API_KEY
           command: ["python", "-m", "chatops.workers.worker"]

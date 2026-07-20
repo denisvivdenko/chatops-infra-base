@@ -32,4 +32,18 @@ data:
   credentials.json: "$ENCODED_CLOUDFLARE_TUNNEL_CREDENTIALS"
 EOF
 
+if [ -z "$OPENAI_API_KEY" ]; then
+    echo "OPENAI_API_KEY is not set"
+    exit 1
+fi
+
+echo "OPENAI_API_KEY: ${OPENAI_API_KEY:0:4}..."
+
+kubectl create namespace dev --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl create secret generic openai-api-key \
+    --namespace dev \
+    --from-literal=OPENAI_API_KEY="$OPENAI_API_KEY" \
+    --dry-run=client -o yaml | kubectl apply -f -
+
 kubectl apply -f argocd/root-app.yaml
